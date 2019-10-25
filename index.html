@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Note: This file was originally named audio_begin.html.  So if you notice something
+	different in the example video don't be alarmed.-->
+
+	<meta charset="UTF-8">
+	<title>JavaScript Video Controls</title>
+	<style>
+		video{
+			width: 90%;
+			border: 1px solid black;
+		}
+
+		/*Use this class to change video color*/
+		.grayscale{
+			filter: grayscale(100%);
+		}
+
+		button{
+			margin-bottom: 5px;
+		}
+
+		/*You can not change anything in the style tag other than to add images for the buttons. */
+</style>
+</head>
+<body>
+<main>
+	<h1>JavaScript Video Controls</h1>
+	<button onclick="playVid()" type="button" class="play">Play Video</button>
+	<button onclick="pauseVid()" type="button" class = "pause">Pause Video</button><br>
+	<button onclick="slowSpeed()" type="button">Slow Down</button>
+	<button onclick="increaseSpeed()" type="button">Speed Up</button><br>
+
+
+
+	<figure>
+	<video id="myVideo">
+		<source src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Big_Buck_Bunny_Trailer_400p.ogv" type="video/ogg" />
+	  	Your browser does not support HTML5 video.
+	</video>
+	<figcaption>[Dramatic music throughout but no speaking]</figcaption>
+
+
+</figure>
+
+	<br/>
+	<button id="mute" onclick="mute()" type="button">Mute</button><br>
+
+	<label for="volumeSlider">Volume </label>: 0 <input type="range" id="volumeSlider"
+         min="0" max="100" value="100" step="10"> 100%<br>
+	<div>Volume is: <span id = "volume"> </span><br><br></div>
+	<!-- when I get soemthing by id, I'm manipulating the whole element -->
+	<!-- label is for accessibility on any input  label for = ""-->
+
+	<button onclick="gray()" type="button">Old School</button>
+	<button onclick="color()" type="button">Original</button>
+	<button onclick="random()" type="button">Random</button><br>
+
+	<p>Video courtesy of <a href="https://www.bigbuckbunny.org/" target="_blank">Big Buck Bunny</a>.</p>
+
+	<script>
+		// You may only change code in the script tag.
+		// You can not change the HTML in the file.
+		var vid = document.getElementById("myVideo");
+		var volumeSlider = document.querySelector("#volumeSlider");
+			// this variable var is a house for all the information about #volumeslider
+
+		function playVid() {
+			vid.play();
+			console.log("Play Video")
+			document.querySelector("#volume").innerHTML= document.querySelector("#volumeSlider").value;
+			// make the volume show up
+			// document.getElementById("volume").innerHTML='volumeSlider';
+		}
+
+
+
+	var vid = document.getElementById("myVideo");
+
+	function pauseVid() {
+		vid.pause();
+		console.log("Pause Video")
+
+		}
+	  	// Play the video.
+
+
+	var vid = document.getElementById("myVideo");
+
+	function slowSpeed() {
+		vid.playbackRate *= 0.5;
+		speedVariable = vid.playbackRate;
+			console.log("Playback rate =" + speedVariable);
+			// Slow the video speed by half and log the new rate to the console.
+		}
+
+
+
+	var vid = document.getElementById("myVideo");
+
+	function increaseSpeed() {
+		vid.playbackRate *= 2.0;
+		speedVariable = vid.playbackRate;
+			console.log("Playback rate =" + speedVariable)
+	}
+
+
+	function mute() {
+		// If the video is currently muted:
+		if (vid.muted == true) {
+			// when you click the button
+			console.log("unmute")
+			// 		log "unmute" to the console
+			vid.muted = false;
+			// 	unmute the video
+			document.getElementById("mute").innerHTML = 'Mute';
+			// 		change the button text to "mute"
+		}
+
+		else  {
+			//when click the mute
+			// If the video is currently unmuted:
+			console.log("mute")
+			//		log "mute" to the console
+			vid.muted = true;
+			// 		mute the video
+			document.getElementById("mute").innerHTML = "Unmute"
+			}
+
+
+		// 		change the button text to "unmute"
+	}
+
+	volumeSlider.oninput = function() {
+		var x = document.querySelector("#volume");
+		console.log(this.value);
+		x.innerHTML = this.value;
+		vid.volume = this.value/100;
+		// document.querySelector("#volumeSlider").value;
+		/*this.value = document.querySelector("volumeSlider").value because this =
+		/*the variable that holds the element that has the id that is in the function
+	 Change the volume (0 is off, 100 is full volume, everything else is proportionally in between)
+	 /last line -- I am setting the variable's volume (volume is a property ) to the value within 'This'
+	 /this = volumeSlider variable which contains the element input which includes the value for the volumeSlider
+	 /it doesn't work because the volume only goes between 0 and 1
+	 /so I divide it by 100
+	 /the vid is the variable I'm changing.  I take the volume of it because that is a built in setProperty
+	 then I set it equal to this.value -this which is hte volumeSlider variable which is the input element and I
+	 /retrieve its value from the users input which is held within the input element function
+	 /I'm grabbing the input element from the variable volumeSlider which is grabbing the getElementById
+	 /its id is also volumeSlider, what I'm naming the variable
+
+		document.querySelector("myVideo").volume;
+		// Make sure to update the volume element.
+
+	 Update the console log with the new volume as well.*/
+	}
+
+
+	function gray() {
+		vid.classList.add("grayscale");
+		console.log("In grayscale")
+		// Utilize the existing grayscale class.
+
+	}
+
+	function color() {
+		vid.classList.remove("grayscale")
+		console.log("In color")
+		// Remove the existing grayscale class.
+
+	}
+
+	//
+	function random(){
+
+		var random = Math.random()*100;
+		// vid.style.setProperty('filter', 'grayscale(' + random + '%)');
+		vid.style.setProperty("transform", "skewX(" + random +  "deg)");
+
+		vid.style.setProperty('filter', 'grayscale(' + random +'%)');
+
+		// skewX(XXXdeg)
+		// vid.classList.add("grayscale")
+		/*random = math.random
+		math.random
+		vid.transform */
+
+		console.log()
+		// Use setProperty to change the grayscale filter and transform properties of the video.
+		// Log what the new values are to the console.
+	}
+
+	</script>
+
+</main>
+</body>
+</html>
